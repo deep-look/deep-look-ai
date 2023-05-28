@@ -69,7 +69,7 @@ preprocess = A.Compose([
 def crop_face(image):
     face_cascade = cv2.CascadeClassifier("./haarcascade_frontalface_default.xml")
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.2, 5)
+    faces = face_cascade.detectMultiScale(gray, 1.1, 5)
 
     for (x, y, w, h) in faces:
         cropped_image = image[y: y + h, x: x + w]
@@ -93,12 +93,12 @@ def predict_celebrity(image):
             return [closest_celebrity, max_similarity.item()]
     
 @app.route('/')
-@cross_origin
+@cross_origin()
 def index():
     return 'success'
 
 @app.route('/predict', methods=['POST'])
-@cross_origin()
+@cross_origin('*')
 def predict():
     try:
         image_data = request.form.get('image')
@@ -116,5 +116,5 @@ def predict():
         return jsonify({'error': 'Error occurred during prediction'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=6000)
 
