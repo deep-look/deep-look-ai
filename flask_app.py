@@ -97,7 +97,7 @@ def predict_celebrity(image):
 def index():
     return 'success'
 
-@app.route('/predict', methods=['POST'])
+@app.route('/flask/predict', methods=['POST'])
 @cross_origin('*')
 def predict():
     try:
